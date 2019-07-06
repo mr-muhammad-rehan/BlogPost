@@ -7,14 +7,13 @@
             <div class="col-lg-8 col-md-10 mx-auto">
             <h2 class="section-heading">{{$post->title}}</h2>
             <hr>
-            <p>{{$post->body}}</p>
+            <p>{!! $post->body !!}</p>
             </div>
         </div>
         <br><br><br>
         @can('update', $post)
             <a href="/posts/{{$post->id}}/edit" > Edit Post </a>
         @endcan
-
 
         <hr>
 
@@ -24,7 +23,7 @@
            @foreach ($post->comments as $comment)
             <div class="media text-muted pt-3">
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">{{$comment->user->name}}</strong>
+                    <strong class="d-block text-gray-dark">{{$comment->user->username}}</strong>
                         {{$comment->comment}}
                     </p>
             </div>

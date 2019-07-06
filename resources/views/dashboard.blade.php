@@ -18,7 +18,7 @@
               </h2>
               <h3 class="post-subtitle">
                 @if (empty($post->excerpt))
-                  {{ str_limit($post->body, $limit = 50, $end = '...') }}
+                  {!! str_limit($post->body, $limit = 50, $end = '...') !!}
 
                   @else
 
@@ -29,7 +29,7 @@
             </a>
             <p class="post-meta">Posted by
              <a href="/posts/{{$post->id}}"> {{$post->user->name}} </a>
-              on July 8, 2019</p>
+             {{ $post->created_at->diffForHumans() }}</p>
           </div>
           <hr>
         @endforeach
