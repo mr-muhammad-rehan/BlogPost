@@ -16,7 +16,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::where('owner_id', auth()->id())->get();
-         
+
         return view('posts.index', compact('posts'));
     }
 
@@ -46,8 +46,6 @@ class PostsController extends Controller
 
         $validatedPost['owner_id'] = auth()->id();
 
-        //return $validatedPost;
-
         Post::create( $validatedPost );
 
         return redirect('/posts');
@@ -62,9 +60,9 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post')); 
+        return view('posts.show', compact('post'));
     }
-  
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -72,8 +70,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
-    { 
-        $this->authorize('view', $post);
+    {
+        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
