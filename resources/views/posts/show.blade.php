@@ -2,14 +2,65 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-            <h2 class="section-heading">{{$post->title}}</h2>
-            <hr>
-            <p>{!! $post->body !!}</p>
-            </div>
-        </div>
+
+            <div>
+
+                    <!-- Post Content Column -->
+                    <div class="col col-lg-8 col-xl-8">
+                
+                      <!-- Title -->
+                      <h1 class="mt-4">{{$post->title}}</h1>
+                
+                      <!-- Author -->
+                      <p class="lead">
+                        by
+                        <a href="#">{{$post->user->name}}</a>
+                      </p>
+                
+                      <hr>
+
+                      <!-- Date/Time -->
+                      <p>Posted on {{ $post->created_at->format('j F, Y')}}</p>
+                
+                      <hr>
+                
+                      <!-- Preview Image -->
+                    <img class="img-fluid img-cover rounded"  src="/storage/cover_images/{{$post->cover_image}}" alt="">
+                
+                      <hr>
+                
+                      <!-- Post Content -->
+
+                      {!! $post->body !!}
+                     
+                      <hr>
+                
+                      
+                       
+                    </div>
+                
+                
+                </div>
+                
         <br><br><br>
         @can('update', $post)
             <a href="/posts/{{$post->id}}/edit" > Edit Post </a>

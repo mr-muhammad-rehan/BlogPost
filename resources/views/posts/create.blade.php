@@ -16,7 +16,7 @@
             @endforeach
         @endif
 
-        <form method="POST" action="/posts">
+        <form method="POST" action="/posts" enctype="multipart/form-data">
 
             @csrf
             @method('POST')
@@ -41,6 +41,13 @@
                 <label>Post Body*</label>
                 <textarea rows="5" class="form-control @error('body') border-danger @enderror" placeholder="Post Description" name="body" required="" ></textarea>
                 
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                <label>Cover Image</label>
+                    <input type="file" class="form-control" name="cover_image" value="Upload File"/>             
                 </div>
             </div>
             <br>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -26,8 +27,12 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('posts.create');
+    {   
+        if (auth()->authenticate()) {
+         return view('posts.create');
+        }
+
+        //return view('posts.create');
     }
 
     /**
@@ -41,10 +46,14 @@ class PostsController extends Controller
         $validatedPost = $request->validate([
             'title' => 'required|min:4|max:255',
             'body' => 'required|min:6',
-            'excerpt' => 'max:255'
+            'excerpt' => 'max:255',
+            'cover_image' => 'image|nullable|max:1999'
         ]);
 
+       $fileNameToStore=coverImage($request);
+
         $validatedPost['owner_id'] = auth()->id();
+        $validatedPost['cover_image'] = $fileNameToStore;
 
         Post::create( $validatedPost );
 
@@ -104,5 +113,26 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
        $post->delete();
+       return redirect('/posts');
+    }
+
+
+    public function coverImage($request)
+    {
+        if($request->hasFile('cover_image')){
+            //Get Filename with extension
+            $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
+            //Get filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get Extention
+            $extention = $request->file('cover_image')->getClientOriginalExtension();
+            //FileName To store
+            $fileNameToStore = $filename.'_'.time().'.'.$extention;
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+        
+        return $fileNameToStore;
     }
 }

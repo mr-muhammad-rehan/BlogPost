@@ -11,7 +11,8 @@ class Post extends Model
         'title',
         'body',
         'excerpt',
-        'owner_id'
+        'owner_id',
+        'cover_image',
     ];
 
     public function comments()
@@ -32,4 +33,6 @@ class Post extends Model
             'comment' => $comment['comment'],
         ]);
     }
+
+  
 }

@@ -9,6 +9,8 @@ class PostsCommentsController extends Controller
 {
     public function store(Post $post)
     {
+        $this->authorize('create', $post);
+        
         $validatedCOmment =  request()->validate([
             'comment'=>'required|min:1',
          ]);
